@@ -1,0 +1,43 @@
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.calculator {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+.display {
+  border: 2px solid black;
+  padding: 10px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+}
+
+.btn {
+  flex: 1;
+}
+
+.last-row {
+  display: flex;
+}
+
+.last-row > div {
+  display: flex;
+  flex: 1;
+}
