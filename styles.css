@@ -1,23 +1,30 @@
-html {
+body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: rgb(0, 0, 20);
 }
 
 .container {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .calculator {
   display: flex;
   flex-direction: column;
   width: 300px;
+  padding: 10px;
+  gap: 10px;
+  border: 2px solid rgb(58, 58, 58);
 }
 
 .display {
-  border: 2px solid black;
-  padding: 10px;
+  padding: 20px 10px;
+  background-color: rgb(53, 53, 53);
+  color: white;
 }
 
 .buttons {
@@ -31,6 +38,25 @@ html {
 
 .btn {
   flex: 1;
+  padding: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: rgb(41, 41, 41);
+  border: 1px solid rgb(0, 0, 0);
+  cursor: pointer;
+  color: rgb(255, 255, 255);
+}
+
+.cancel {
+  color: rgb(255, 80, 80);
+}
+
+.equal {
+  background-color: rgb(70, 167, 70);
+}
+
+.operator {
+  background-color: rgb(53, 53, 53);
 }
 
 .last-row {
