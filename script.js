@@ -50,6 +50,8 @@ function populateDisplay(e) {
 
 function handleOperator(e) {
   operation = e.target.textContent;
+  previousOperation.textContent = operation;
+  previousOperation.classList.remove('hidden')
 }
 
 function clearDisplay() {
@@ -57,6 +59,7 @@ function clearDisplay() {
   firstNum = '';
   secondNum = '';
   operation = '';
+  previousOperation.textContent = '';
   enteringSecondNumber = false;
 }
 
@@ -64,6 +67,7 @@ function handleEqual() {
   firstNum = operate(+firstNum, +secondNum, operation);
   secondNum = '';
   display.textContent = firstNum;
+  previousOperation.textContent = '';
 }
 
 let firstNum = '';
@@ -74,6 +78,7 @@ let enteringSecondNumber = false;
 const display = document.querySelector('.output');
 const numbers = document.querySelectorAll('.num');
 const operators = document.querySelectorAll('.operator');
+const previousOperation = document.querySelector('.previous-operation');
 const cancel = document.querySelector('.cancel');
 const equal = document.querySelector('.equal');
 
