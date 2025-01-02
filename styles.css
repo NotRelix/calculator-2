@@ -23,9 +23,28 @@ body {
 }
 
 .display {
-  padding: 30px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 10px;
   background-color: rgb(53, 53, 53);
   color: white;
+  height: 80px;
+}
+
+.previous-operation {
+  margin: 50px;
+}
+
+.output {
+  font-size: 36px;
+}
+
+.previous-operation,
+.output {
+  text-align: end;
+  margin: 0;
+  padding: 0;
 }
 
 .buttons {
@@ -68,4 +87,8 @@ body {
 .last-row > div {
   display: flex;
   flex: 1;
+}
+
+.hidden {
+  visibility: hidden; 
 }

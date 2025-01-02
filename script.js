@@ -71,7 +71,7 @@ let secondNum = '';
 let operation = '';
 let enteringSecondNumber = false;
 
-const display = document.querySelector('.display');
+const display = document.querySelector('.output');
 const numbers = document.querySelectorAll('.num');
 const operators = document.querySelectorAll('.operator');
 const cancel = document.querySelector('.cancel');
