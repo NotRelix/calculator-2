@@ -35,11 +35,15 @@ body {
 
 .output {
   font-size: 36px;
+  text-align: end;
+}
+
+.previous-operation {
+  margin: 10px;
 }
 
 .previous-operation,
 .output {
-  text-align: end;
   margin: 0;
   padding: 0;
 }

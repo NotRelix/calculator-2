@@ -30,11 +30,12 @@ function operate(firstNum, secondNum, operation) {
       value = divide(firstNum, secondNum);
       break;
   }
-  return value;
+  return Math.round(value * 100000) / 100000;
 }
 
 function populateDisplay(e) {
   const number = +e.target.textContent;
+  let secondNumDisplay = '';
   if (+display.textContent === 0 || enteringSecondNumber) {
     display.textContent = '';
     enteringSecondNumber = false;
@@ -46,17 +47,23 @@ function populateDisplay(e) {
   } else {
     secondNum += e.target.textContent;
   }
+
+  if (currentlyEnteringSecondNumber) {
+    secondNumDisplay = display.textContent;
+    previousOperationDisplay.textContent = `${firstNum} ${operation} ${secondNumDisplay}`;
+  }
 }
 
 function handleOperator(e) {
   operation = e.target.textContent;
-  previousOperationDisplay.textContent = operation;
   previousOperationDisplay.classList.remove('hidden');
   if (secondNum) {
     firstNum = operate(+firstNum, +secondNum, previousOperation);
     secondNum = '';
     display.textContent = firstNum;
+    currentlyEnteringSecondNumber = false;
   }
+  previousOperationDisplay.textContent = `${firstNum} ${operation}`;
   previousOperation = operation;
 }
 
@@ -81,6 +88,7 @@ let secondNum = '';
 let operation = '';
 let prevOperation = '';
 let enteringSecondNumber = false;
+let currentlyEnteringSecondNumber = false;
 
 const display = document.querySelector('.output');
 const numbers = document.querySelectorAll('.num');
@@ -97,6 +105,7 @@ operators.forEach(operator => {
   operator.addEventListener('click', (e) => {
     handleOperator(e);
     enteringSecondNumber = true;
+    currentlyEnteringSecondNumber = true;
   });
 })
 
