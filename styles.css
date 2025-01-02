@@ -3,13 +3,14 @@ body {
   padding: 0;
   box-sizing: border-box;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  background-color: rgb(0, 0, 20);
+  background-color: rgb(0, 0, 20);;
 }
 
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
 }
 
 .calculator {
@@ -22,7 +23,7 @@ body {
 }
 
 .display {
-  padding: 20px 10px;
+  padding: 30px 10px;
   background-color: rgb(53, 53, 53);
   color: white;
 }
