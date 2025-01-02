@@ -37,6 +37,10 @@ function operate(firstNum, secondNum, operation) {
 function populateDisplay(e) {
   const number = +e.target.textContent;
   let secondNumDisplay = '';
+  if (clickedEquals) {
+    clickedEquals = false;
+    clearDisplay();
+  }
   if (+display.textContent === 0 || enteringSecondNumber) {
     display.textContent = '';
     enteringSecondNumber = false;
@@ -56,16 +60,19 @@ function populateDisplay(e) {
 }
 
 function handleOperator(e) {
-  operation = e.target.textContent;
-  previousOperationDisplay.classList.remove('hidden');
-  if (secondNum) {
-    firstNum = operate(+firstNum, +secondNum, previousOperation);
-    secondNum = '';
-    display.textContent = firstNum;
-    currentlyEnteringSecondNumber = false;
+  if (display.textContent != 0) {
+    operation = e.target.textContent;
+    clickedEquals = false;
+    previousOperationDisplay.classList.remove('hidden');
+    if (secondNum) {
+      firstNum = operate(+firstNum, +secondNum, previousOperation);
+      secondNum = '';
+      display.textContent = firstNum;
+      currentlyEnteringSecondNumber = false;
+    }
+    previousOperationDisplay.textContent = `${firstNum} ${operation}`;
+    previousOperation = operation;
   }
-  previousOperationDisplay.textContent = `${firstNum} ${operation}`;
-  previousOperation = operation;
 }
 
 function clearDisplay() {
@@ -78,10 +85,14 @@ function clearDisplay() {
 }
 
 function handleEqual() {
-  firstNum = operate(+firstNum, +secondNum, operation);
-  secondNum = '';
-  display.textContent = firstNum;
-  previousOperationDisplay.textContent = '';
+  if (firstNum && secondNum && operation) {
+    firstNum = operate(+firstNum, +secondNum, operation);
+    operation = '';
+    secondNum = '';
+    display.textContent = firstNum;
+    previousOperationDisplay.textContent = '';
+    clickedEquals = true;
+  }
 }
 
 let firstNum = '';
@@ -90,6 +101,7 @@ let operation = '';
 let prevOperation = '';
 let enteringSecondNumber = false;
 let currentlyEnteringSecondNumber = false;
+let clickedEquals = false;
 
 const display = document.querySelector('.output');
 const numbers = document.querySelectorAll('.num');
