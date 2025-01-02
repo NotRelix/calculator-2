@@ -49,6 +49,7 @@ body {
 }
 
 .cancel {
+  background-color: rgb(53, 53, 53);
   color: rgb(255, 80, 80);
 }
 

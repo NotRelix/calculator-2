@@ -39,13 +39,29 @@ function populateDisplay(e) {
   display.textContent += number;
 }
 
+function handleOperator(e) {
+  const operator = e.target.textContent;
+}
+
+function clearDisplay() {
+  display.textContent = 0;
+}
+
 let firstNum;
 let secondNum;
 let operation;
 
 const display = document.querySelector('.display');
 const numbers = document.querySelectorAll('.num');
+const operators = document.querySelectorAll('.operator');
+const cancel = document.querySelector('.cancel');
 
 numbers.forEach(number => {
   number.addEventListener('click', populateDisplay);
 });
+
+operators.forEach(operator => {
+  operator.addEventListener('click', handleOperator);
+})
+
+cancel.addEventListener('click', clearDisplay);
