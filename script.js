@@ -32,7 +32,10 @@ function operate(firstNum, secondNum, operation) {
 }
 
 function populateDisplay(e) {
-  const number = e.target.textContent;
+  const number = +e.target.textContent;
+  if (+display.textContent === 0) {
+    display.textContent = '';
+  }
   display.textContent += number;
 }
 
