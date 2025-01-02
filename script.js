@@ -31,6 +31,18 @@ function operate(firstNum, secondNum, operation) {
   }
 }
 
+function populateDisplay(e) {
+  const number = e.target.textContent;
+  display.textContent += number;
+}
+
 let firstNum;
 let secondNum;
 let operation;
+
+const display = document.querySelector('.display');
+const numbers = document.querySelectorAll('.num');
+
+numbers.forEach(number => {
+  number.addEventListener('click', populateDisplay);
+});
