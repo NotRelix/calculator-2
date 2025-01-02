@@ -11,6 +11,7 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
+  if (b === 0) return 0;
   return a / b;
 }
 
@@ -48,7 +49,7 @@ function populateDisplay(e) {
     secondNum += e.target.textContent;
   }
 
-  if (currentlyEnteringSecondNumber) {
+  if (currentlyEnteringSecondNumber && operation) {
     secondNumDisplay = display.textContent;
     previousOperationDisplay.textContent = `${firstNum} ${operation} ${secondNumDisplay}`;
   }
