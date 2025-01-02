@@ -15,53 +15,79 @@ function divide(a, b) {
 }
 
 function operate(firstNum, secondNum, operation) {
+  let value = 0;
   switch(operation) {
     case '+':
-      console.log(add(firstNum, secondNum));
+      value = add(firstNum, secondNum);
       break;
     case '-':
-      console.log(subtract(firstNum, secondNum));
+      value = subtract(firstNum, secondNum);
       break;
     case '*':
-      console.log(multiply(firstNum, secondNum));
+      value = multiply(firstNum, secondNum);
       break;
     case '/':
-      console.log(divide(firstNum, secondNum));
+      value = divide(firstNum, secondNum);
       break;
   }
+  return value;
 }
 
 function populateDisplay(e) {
   const number = +e.target.textContent;
-  if (+display.textContent === 0) {
+  if (+display.textContent === 0 || enteringSecondNumber) {
     display.textContent = '';
+    enteringSecondNumber = false;
   }
   display.textContent += number;
+
+  if (!operation) {
+    firstNum += e.target.textContent;
+  } else {
+    secondNum += e.target.textContent;
+  }
 }
 
 function handleOperator(e) {
-  const operator = e.target.textContent;
+  operation = e.target.textContent;
 }
 
 function clearDisplay() {
   display.textContent = 0;
+  firstNum = '';
+  secondNum = '';
+  operation = '';
+  enteringSecondNumber = false;
 }
 
-let firstNum;
-let secondNum;
-let operation;
+function handleEqual() {
+  firstNum = operate(+firstNum, +secondNum, operation);
+  secondNum = '';
+  display.textContent = firstNum;
+}
+
+let firstNum = '';
+let secondNum = '';
+let operation = '';
+let enteringSecondNumber = false;
 
 const display = document.querySelector('.display');
 const numbers = document.querySelectorAll('.num');
 const operators = document.querySelectorAll('.operator');
 const cancel = document.querySelector('.cancel');
+const equal = document.querySelector('.equal');
 
 numbers.forEach(number => {
   number.addEventListener('click', populateDisplay);
 });
 
 operators.forEach(operator => {
-  operator.addEventListener('click', handleOperator);
+  operator.addEventListener('click', (e) => {
+    handleOperator(e);
+    enteringSecondNumber = true;
+  });
 })
 
 cancel.addEventListener('click', clearDisplay);
+
+equal.addEventListener('click', handleEqual);
