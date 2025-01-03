@@ -78,7 +78,8 @@ body {
 
 .operator,
 .cancel,
-.del {
+.del,
+.negative {
   background-color: rgb(53, 53, 53);
 }
 
