@@ -12,6 +12,7 @@ const operators = document.querySelectorAll('.operator');
 const previousOperationDisplay = document.querySelector('.previous-operation');
 const cancel = document.querySelector('.cancel');
 const equal = document.querySelector('.equal');
+const del = document.querySelector('.del');
 
 numbers.forEach(number => {
   number.addEventListener('click', (e) => populateDisplay(e.target.textContent));
@@ -44,7 +45,7 @@ document.addEventListener('keydown', (e) => {
     handleEqual();
   }
 })
-
+del.addEventListener('click', handleUndo);
 
 function add(a, b) {
   return a + b;
@@ -158,8 +159,6 @@ function clearDisplay() {
 }
 
 function handleUndo() {
-  console.log(enteringSecondNumber);
-  console.log(currentlyEnteringSecondNumber);
   if (secondNum) {
     secondNum = secondNum.slice(0, secondNum.length - 1);
     const prevDisplay = previousOperationDisplay.textContent.slice(0, previousOperationDisplay.textContent.length - 1);
@@ -167,7 +166,7 @@ function handleUndo() {
     previousOperationDisplay.textContent = prevDisplay;
     if (!secondNum) {
       previousOperationDisplay.textContent = prevDisplay.slice(0, prevDisplay.length - 1);
-      display.textContent = '0';
+      display.textContent = firstNum;
     }
   } else if (operation) {
     operation = '';

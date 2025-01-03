@@ -69,7 +69,6 @@ body {
 }
 
 .cancel {
-  background-color: rgb(53, 53, 53);
   color: rgb(255, 80, 80);
 }
 
@@ -77,7 +76,9 @@ body {
   background-color: rgb(70, 167, 70);
 }
 
-.operator {
+.operator,
+.cancel,
+.del {
   background-color: rgb(53, 53, 53);
 }
 
