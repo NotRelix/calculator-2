@@ -19,9 +19,11 @@ numbers.forEach(number => {
 
 operators.forEach(operator => {
   operator.addEventListener('click', (e) => {
-    handleOperator(e);
-    enteringSecondNumber = true;
-    currentlyEnteringSecondNumber = true;
+    if (display.textContent.at(-1) !== '.') {
+      handleOperator(e);
+      enteringSecondNumber = true;
+      currentlyEnteringSecondNumber = true;
+    }
   });
 })
 
@@ -73,6 +75,7 @@ function populateDisplay(e) {
     clickedEquals = false;
     clearDisplay();
   }
+
   if ((+outputValue === 0 && number !== '.' && !outputValue.includes('.')) || enteringSecondNumber) {
     if (number === '.') {
       display.textContent = '0';
@@ -81,18 +84,31 @@ function populateDisplay(e) {
     }
     enteringSecondNumber = false;
   }
-  if (!display.textContent.includes('.') || number !== '.') {
-    display.textContent += number;
-    if (!operation) {
-      if (number === '.')
-        firstNum += '0';
-      firstNum += e.target.textContent;
-    } else {
-      if (number === '.')
-        secondNum += '0';
-      secondNum += e.target.textContent;
-    }
   
+  if (!display.textContent.includes('.') || number !== '.') {
+    if (display.textContent === '0') {
+      if (number === '.') {
+        display.textContent = '0' + number;
+      } else {
+        display.textContent = number;
+      }
+    } else {
+      display.textContent += number;
+    }
+
+    if (!operation) {
+      if (number === '.') {
+        firstNum += '.';
+      } else {
+        firstNum = display.textContent;
+      }
+    } else {
+      if (number === '.') {
+        secondNum += '0';
+      }
+      secondNum = display.textContent;
+    }
+    
     if (currentlyEnteringSecondNumber && operation) {
       if (number === '.')
         secondNumDisplay += '0';
@@ -119,7 +135,7 @@ function handleOperator(e) {
 }
 
 function clearDisplay() {
-  display.textContent = 0;
+  display.textContent = '0';
   firstNum = '';
   secondNum = '';
   operation = '';
