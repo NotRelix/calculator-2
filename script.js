@@ -32,8 +32,10 @@ equal.addEventListener('click', handleEqual);
 document.addEventListener('keydown', (e) => {
   if (+e.key || +e.key === 0 || e.key === '.') {
     populateDisplay(e.key)
-  } else if (e.key === 'Backspace') {
+  } else if (e.key === 'Backspace' && e.ctrlKey === true) {
     clearDisplay();
+  } else if (e.key === 'Backspace') {
+    handleUndo();
   } else if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') {
     handleOperator(e.key);
     enteringSecondNumber = true;
@@ -153,6 +155,34 @@ function clearDisplay() {
   operation = '';
   previousOperationDisplay.textContent = '';
   enteringSecondNumber = false;
+}
+
+function handleUndo() {
+  console.log(enteringSecondNumber);
+  console.log(currentlyEnteringSecondNumber);
+  if (secondNum) {
+    secondNum = secondNum.slice(0, secondNum.length - 1);
+    const prevDisplay = previousOperationDisplay.textContent.slice(0, previousOperationDisplay.textContent.length - 1);
+    display.textContent = secondNum;
+    previousOperationDisplay.textContent = prevDisplay;
+    if (!secondNum) {
+      previousOperationDisplay.textContent = prevDisplay.slice(0, prevDisplay.length - 1);
+      display.textContent = '0';
+    }
+  } else if (operation) {
+    operation = '';
+    const prevDisplay = previousOperationDisplay.textContent.slice(0, previousOperationDisplay.textContent.length - 2);
+    previousOperationDisplay.textContent = prevDisplay;
+    currentlyEnteringSecondNumber = false;
+    display.textContent = firstNum;
+    previousOperationDisplay.textContent = '';
+  } else {
+    firstNum = firstNum.slice(0, firstNum.length - 1);
+    display.textContent = firstNum;
+    if (!firstNum) {
+      display.textContent = '0';
+    }
+  }
 }
 
 function handleEqual() {
