@@ -1,3 +1,34 @@
+let firstNum = '';
+let secondNum = '';
+let operation = '';
+let prevOperation = '';
+let enteringSecondNumber = false;
+let currentlyEnteringSecondNumber = false;
+let clickedEquals = false;
+
+const display = document.querySelector('.output');
+const numbers = document.querySelectorAll('.num');
+const operators = document.querySelectorAll('.operator');
+const previousOperationDisplay = document.querySelector('.previous-operation');
+const cancel = document.querySelector('.cancel');
+const equal = document.querySelector('.equal');
+
+numbers.forEach(number => {
+  number.addEventListener('click', populateDisplay);
+});
+
+operators.forEach(operator => {
+  operator.addEventListener('click', (e) => {
+    handleOperator(e);
+    enteringSecondNumber = true;
+    currentlyEnteringSecondNumber = true;
+  });
+})
+
+cancel.addEventListener('click', clearDisplay);
+equal.addEventListener('click', handleEqual);
+
+
 function add(a, b) {
   return a + b;
 }
@@ -35,7 +66,8 @@ function operate(firstNum, secondNum, operation) {
 }
 
 function populateDisplay(e) {
-  const number = +e.target.textContent;
+  const number = e.target.textContent;
+  console.log(number);
   let secondNumDisplay = '';
   if (clickedEquals) {
     clickedEquals = false;
@@ -45,17 +77,18 @@ function populateDisplay(e) {
     display.textContent = '';
     enteringSecondNumber = false;
   }
-  display.textContent += number;
-
-  if (!operation) {
-    firstNum += e.target.textContent;
-  } else {
-    secondNum += e.target.textContent;
-  }
-
-  if (currentlyEnteringSecondNumber && operation) {
-    secondNumDisplay = display.textContent;
-    previousOperationDisplay.textContent = `${firstNum} ${operation} ${secondNumDisplay}`;
+  if (number !== '.' || !display.textContent.includes('.')) {
+    display.textContent += number;
+    if (!operation) {
+      firstNum += e.target.textContent;
+    } else {
+      secondNum += e.target.textContent;
+    }
+  
+    if (currentlyEnteringSecondNumber && operation) {
+      secondNumDisplay = display.textContent;
+      previousOperationDisplay.textContent = `${firstNum} ${operation} ${secondNumDisplay}`;
+    }
   }
 }
 
@@ -95,33 +128,10 @@ function handleEqual() {
   }
 }
 
-let firstNum = '';
-let secondNum = '';
-let operation = '';
-let prevOperation = '';
-let enteringSecondNumber = false;
-let currentlyEnteringSecondNumber = false;
-let clickedEquals = false;
-
-const display = document.querySelector('.output');
-const numbers = document.querySelectorAll('.num');
-const operators = document.querySelectorAll('.operator');
-const previousOperationDisplay = document.querySelector('.previous-operation');
-const cancel = document.querySelector('.cancel');
-const equal = document.querySelector('.equal');
-
-numbers.forEach(number => {
-  number.addEventListener('click', populateDisplay);
-});
-
-operators.forEach(operator => {
-  operator.addEventListener('click', (e) => {
-    handleOperator(e);
-    enteringSecondNumber = true;
-    currentlyEnteringSecondNumber = true;
-  });
-})
-
-cancel.addEventListener('click', clearDisplay);
-
-equal.addEventListener('click', handleEqual);
+function handleDecimal() {
+  const output = display.textContent;
+  if (!output.includes('.')) {
+    display.textContent += '.';
+    firstNum += '.';
+  }
+}
