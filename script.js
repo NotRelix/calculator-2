@@ -14,13 +14,13 @@ const cancel = document.querySelector('.cancel');
 const equal = document.querySelector('.equal');
 
 numbers.forEach(number => {
-  number.addEventListener('click', populateDisplay);
+  number.addEventListener('click', (e) => populateDisplay(e.target.textContent));
 });
 
 operators.forEach(operator => {
   operator.addEventListener('click', (e) => {
     if (display.textContent.at(-1) !== '.') {
-      handleOperator(e);
+      handleOperator(e.target.textContent);
       enteringSecondNumber = true;
       currentlyEnteringSecondNumber = true;
     }
@@ -29,6 +29,19 @@ operators.forEach(operator => {
 
 cancel.addEventListener('click', clearDisplay);
 equal.addEventListener('click', handleEqual);
+document.addEventListener('keydown', (e) => {
+  if (+e.key || +e.key === 0 || e.key === '.') {
+    populateDisplay(e.key)
+  } else if (e.key === 'Backspace') {
+    clearDisplay();
+  } else if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') {
+    handleOperator(e.key);
+    enteringSecondNumber = true;
+    currentlyEnteringSecondNumber = true;
+  } else if (e.key === 'Enter') {
+    handleEqual();
+  }
+})
 
 
 function add(a, b) {
@@ -67,8 +80,7 @@ function operate(firstNum, secondNum, operation) {
   return Math.round(value * 100000) / 100000;
 }
 
-function populateDisplay(e) {
-  const number = e.target.textContent;
+function populateDisplay(number) {
   const outputValue = display.textContent;
   let secondNumDisplay = '';
   if (clickedEquals) {
@@ -120,7 +132,7 @@ function populateDisplay(e) {
 
 function handleOperator(e) {
   if (display.textContent != 0) {
-    operation = e.target.textContent;
+    operation = e;
     clickedEquals = false;
     previousOperationDisplay.classList.remove('hidden');
     if (secondNum) {
