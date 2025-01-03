@@ -39,6 +39,8 @@ document.addEventListener('keydown', (e) => {
     clearDisplay();
   } else if (e.key === 'Backspace') {
     handleUndo();
+  } else if (e.key === '-' && operation) {
+    handleNegative();
   } else if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') {
     handleOperator(e.key);
     enteringSecondNumber = true;
