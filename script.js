@@ -22,7 +22,7 @@ numbers.forEach(number => {
 
 operators.forEach(operator => {
   operator.addEventListener('click', (e) => {
-    if (display.textContent.at(-1) !== '.' && +firstNum) {
+    if (display.textContent.at(-1) !== '.' && (+firstNum || +secondNum)) {
       handleOperator(e.target.textContent);
       enteringSecondNumber = true;
       currentlyEnteringSecondNumber = true;
@@ -139,7 +139,8 @@ function populateDisplay(number) {
 }
 
 function handleOperator(e) {
-  if (+firstNum || operation) {
+  if (+display.textContent || +firstNum || operation) {
+    console.log('sdfisdf')
     operation = e;
     clickedEquals = false;
     previousOperationDisplay.classList.remove('hidden');
