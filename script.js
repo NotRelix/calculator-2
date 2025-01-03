@@ -67,25 +67,35 @@ function operate(firstNum, secondNum, operation) {
 
 function populateDisplay(e) {
   const number = e.target.textContent;
-  console.log(number);
+  const outputValue = display.textContent;
   let secondNumDisplay = '';
   if (clickedEquals) {
     clickedEquals = false;
     clearDisplay();
   }
-  if (+display.textContent === 0 || enteringSecondNumber) {
-    display.textContent = '';
+  if ((+outputValue === 0 && number !== '.' && !outputValue.includes('.')) || enteringSecondNumber) {
+    if (number === '.') {
+      display.textContent = '0';
+    } else {
+      display.textContent = '';
+    }
     enteringSecondNumber = false;
   }
-  if (number !== '.' || !display.textContent.includes('.')) {
+  if (!display.textContent.includes('.') || number !== '.') {
     display.textContent += number;
     if (!operation) {
+      if (number === '.')
+        firstNum += '0';
       firstNum += e.target.textContent;
     } else {
+      if (number === '.')
+        secondNum += '0';
       secondNum += e.target.textContent;
     }
   
     if (currentlyEnteringSecondNumber && operation) {
+      if (number === '.')
+        secondNumDisplay += '0';
       secondNumDisplay = display.textContent;
       previousOperationDisplay.textContent = `${firstNum} ${operation} ${secondNumDisplay}`;
     }
