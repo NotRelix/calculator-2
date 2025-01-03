@@ -5,6 +5,7 @@ let prevOperation = '';
 let enteringSecondNumber = false;
 let currentlyEnteringSecondNumber = false;
 let clickedEquals = false;
+let firstOperation = true;
 
 const display = document.querySelector('.output');
 const numbers = document.querySelectorAll('.num');
@@ -145,6 +146,7 @@ function handleOperator(e) {
       secondNum = '';
       display.textContent = +firstNum;
       currentlyEnteringSecondNumber = false;
+      firstOperation = false;
     } else {
       display.textContent = '0';
     }
@@ -159,6 +161,7 @@ function clearDisplay() {
   secondNum = '';
   operation = '';
   previousOperationDisplay.textContent = '';
+  firstOperation = true;
   enteringSecondNumber = false;
 }
 
@@ -168,9 +171,14 @@ function handleUndo() {
     const prevDisplay = previousOperationDisplay.textContent.slice(0, previousOperationDisplay.textContent.length - 1);
     display.textContent = secondNum;
     previousOperationDisplay.textContent = prevDisplay;
+    if (secondNum === '-') {
+      previousOperationDisplay.textContent = prevDisplay.slice(0, prevDisplay.length - 1);
+      secondNum = '';
+    }
     if (!secondNum) {
       previousOperationDisplay.textContent = prevDisplay.slice(0, prevDisplay.length - 1);
       display.textContent = '0';
+      secondNum = '';
     }
   } else if (operation) {
     operation = '';
@@ -181,9 +189,15 @@ function handleUndo() {
     previousOperationDisplay.textContent = '';
   } else {
     firstNum = firstNum.slice(0, firstNum.length - 1);
+    const prevDisplay = previousOperationDisplay.textContent.slice(0, previousOperationDisplay.textContent.length - 1);
     display.textContent = firstNum;
+    if (firstNum === '-') {
+      previousOperationDisplay.textContent = prevDisplay.slice(0, prevDisplay.length - 1);
+    }
     if (!firstNum) {
       display.textContent = '0';
+      firstNum = '';
+      firstOperation = true;
     }
   }
 }
@@ -221,7 +235,8 @@ function handleNegative() {
       secondNum = toggleNegative;
       display.textContent = toggleNegative;
     }
-  } else if (firstNum) {
+    previousOperationDisplay.textContent = `${+firstNum} ${operation} ${+secondNum}`;
+  } else if (firstNum && !currentlyEnteringSecondNumber || +display.textContent) {
     const newNum = firstNum.split('');
     if (newNum[0] !== '-') {
       newNum.unshift('-');
@@ -233,6 +248,9 @@ function handleNegative() {
       const toggleNegative = newNum.join('');
       firstNum = toggleNegative;
       display.textContent = toggleNegative;
+    }
+    if (!firstOperation) {
+      previousOperationDisplay.textContent = `${+firstNum} ${operation}`;
     }
   }
 }
